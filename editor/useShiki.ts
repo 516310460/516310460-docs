@@ -1,8 +1,74 @@
 import { getHighlighter, BUNDLED_LANGUAGES, BUNDLED_THEMES, Lang, Theme } from 'shiki-es'
 import { useRuntimeConfig } from '#imports'
 import { visit } from 'unist-util-visit'
-import type { HighlightParams, HighlightThemedToken, ParsedContent } from '../../src/runtime/types'
-import mdcTMLanguage from '../../src/runtime/assets/mdc.tmLanguage.json'
+import mdcTMLanguage from './mdc.tmLanguage.json'
+
+interface HighlightParams {
+  code: string
+  lang: string
+  theme: Theme | Record<string, Theme>
+}
+
+interface HighlightThemedToken {
+  content: string
+  color?: string | Record<string, string>
+}
+
+interface ParsedContentMeta {
+  /**
+   * Content id
+   */
+  _id: string
+  /**
+   * Content source
+   */
+  _source?: string
+  /**
+   * Content path, this path is source agnostic and it the content my live in any source
+   */
+  _path?: string
+  /**
+   * Content title
+   */
+  title?: string
+  /**
+   * Content draft status
+   */
+  _draft?: boolean
+  /**
+   * Content partial status
+   */
+  _partial?: boolean
+  /**
+   * Content locale
+   */
+  _locale?: boolean
+  /**
+   * File type of the content, i.e `markdown`
+   */
+  _type?: string
+  /**
+   * Path to the file relative to the content directory
+   */
+  _file?: string
+  /**
+   * Extension of the file
+   */
+  _extension?: string
+
+  [key: string]: any
+}
+
+interface ParsedContent extends ParsedContentMeta {
+  /**
+   * Excerpt
+   */
+  excerpt?: any
+  /**
+   * Content body
+   */
+  body: any
+}
 
 /**
  * Resolve Shiki compatible lang from string.

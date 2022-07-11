@@ -3,13 +3,6 @@ import { defineNuxtConfig } from 'nuxt'
 import consola from 'consola'
 import colors from 'tailwindcss/colors.js'
 
-const alias = {}
-
-if (process.env.NODE_ENV === 'development') {
-  consola.warn('Using local @nuxt/content!')
-  alias['@nuxt/content'] = '../src/module.ts'
-}
-
 export default defineNuxtConfig({
   content: {
     sources: [
@@ -50,8 +43,14 @@ export default defineNuxtConfig({
       ]
     }
   },
-  modules: ['@nuxthq/admin', '@docus/github', 'vue-plausible'],
-  alias,
+
+  modules: [
+    '@nuxt/content',
+    '@nuxt/ui',
+    '@nuxthq/admin',
+    '@docus/github',
+    'vue-plausible'
+  ],
   extends: [
     (process.env.DOCUS_THEME_PATH || './node_modules/@docus/docs-theme')
   ],
